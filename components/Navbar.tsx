@@ -7,8 +7,8 @@ export const Navbar = () => {
 	const [scroll, setScroll] = useState(false)
 
 	return (
-		<nav className="overflow-hidden">
-			<div className="hidden md:flex">
+		<nav>
+			<div className="hidden md:flex max-w-7xl mx-auto overflow-hidden">
 				<div
 					className={`flex items-center space-x-4 ${
 						!scroll && 'translate-x-100'

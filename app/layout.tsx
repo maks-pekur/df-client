@@ -1,9 +1,5 @@
 import Providers from '@/store/Providers'
 
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
-import { Navbar } from '@/components/Navbar'
-
 import './globals.css'
 
 export const metadata = {
@@ -19,12 +15,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className="min-h-screen flex flex-col">
-				<Providers>
-					<Header />
-					<Navbar />
-					<main className="flex-1">{children}</main>
-					<Footer />
-				</Providers>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	)

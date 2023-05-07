@@ -1,27 +1,17 @@
-'use client'
-import { ProductCard } from '@/components/ProductCard'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { fetchProducts } from '@/store/features/productSlice'
-import { useEffect } from 'react'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
+import { MenuList } from '@/components/MenuList'
+import { Navbar } from '@/components/Navbar'
 
 export default function Home() {
-	const dispatch = useAppDispatch()
-	const { data, status, error } = useAppSelector(state => state.product)
-
-	useEffect(() => {
-		dispatch(fetchProducts())
-	}, [])
-
 	return (
-		<div className="max-w-7xl mx-auto">
-			{status === 'idle' && 'pending' && <div>Loading...</div>}
-			{status === 'failed' && <div>{error}</div>}
-			<div className="grid grid-cols-4">
-				{data &&
-					data.map(product => (
-						<ProductCard key={product._id} product={product} />
-					))}
-			</div>
+		<div className="flex flex-col min-h-screen">
+			<Header />
+			<Navbar />
+			<main className="flex-1 max-w-7xl mx-auto">
+				<MenuList />
+			</main>
+			<Footer />
 		</div>
 	)
 }
