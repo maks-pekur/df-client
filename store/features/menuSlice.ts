@@ -1,32 +1,34 @@
-import { IMenuItem } from '@/types'
+import { ICategory, IMenuItem } from '@/types'
+import { api } from '@/utils/api'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 
 type RequestState = 'idle' | 'pending' | 'fulfilled' | 'failed'
 
 interface MenuState {
 	data: IMenuItem[]
+	categories: ICategory[]
 	status: string
 	error: string | null
 }
 
 const initialState: MenuState = {
 	data: [],
+	categories: [],
 	status: 'idle',
 	error: null,
 }
 
 export const fetchMenu = createAsyncThunk<IMenuItem[]>(
 	'api/fetchProducts',
-	async (_, { rejectWithValue }) => {
-		try {
-			const response = await axios(
-				`${process.env.NEXT_PUBLIC_BASE_URL}/products`
-			)
-			return response.data
-		} catch (error) {
-			return rejectWithValue(error.response.data.message)
-		}
+	async () => {
+		return await api('/products').then(response => response.data)
+	}
+)
+
+export const fetchCategories = createAsyncThunk<ICategory[]>(
+	'api/fetchCategories',
+	async () => {
+		return await api('/categories').then(response => response.data)
 	}
 )
 
@@ -52,6 +54,33 @@ export const menuSlice = createSlice({
 			state.data = []
 			state.error = action.error.message
 		})
+
+		builder.addCase(
+			fetchCategories.pending,
+			(state: MenuState, action: any) => {
+				state.status = 'pending'
+				state.categories = []
+				state.error = null
+			}
+		)
+
+		builder.addCase(
+			fetchCategories.fulfilled,
+			(state: MenuState, action: any) => {
+				state.status = 'fulfilled'
+				state.categories = action.payload
+				state.error = null
+			}
+		)
+
+		builder.addCase(
+			fetchCategories.rejected,
+			(state: MenuState, action: any) => {
+				state.status = 'failed'
+				state.categories = []
+				state.error = action.error.message
+			}
+		)
 	},
 })
 

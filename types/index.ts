@@ -20,3 +20,9 @@ export interface IMenuItem {
 	type: string
 	weight: number
 }
+
+export interface ICategory {
+	_id: string
+	name: string
+	slug: string
+}

@@ -3,12 +3,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 type RequestState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
 
 interface CartState {
+	isOpen: boolean
 	data: []
 	status: string
 	error: string | null
 }
 
 const initialState: CartState = {
+	isOpen: false,
 	data: [],
 	status: 'idle',
 	error: null,
@@ -23,7 +25,14 @@ export const fetchCart = createAsyncThunk('api/fetchCart', async () => {
 export const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
-	reducers: {},
+	reducers: {
+		openCart: state => {
+			state.isOpen = true
+		},
+		closeCart: state => {
+			state.isOpen = false
+		},
+	},
 	extraReducers: builder => {
 		builder.addCase(fetchCart.pending, (state: CartState, action: any) => {
 			state.status = 'pending'
@@ -45,6 +54,7 @@ export const cartSlice = createSlice({
 	},
 })
 
-export const cartItems = (state: any) => state.cart.data
+
+export const { openCart, closeCart } = cartSlice.actions
 
 export default cartSlice.reducer
