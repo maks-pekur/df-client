@@ -1,9 +1,10 @@
-import { Inter } from 'next/font/google'
 import Providers from '@/store/Providers'
 
-import './globals.css'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
+import { Navbar } from '@/components/Navbar'
 
-const inter = Inter({ subsets: ['latin'] })
+import './globals.css'
 
 export const metadata = {
 	title: 'Create Next App',
@@ -17,8 +18,13 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
-				<Providers>{children}</Providers>
+			<body className="min-h-screen flex flex-col">
+				<Providers>
+					<Header />
+					<Navbar />
+					<main className="flex-1">{children}</main>
+					<Footer />
+				</Providers>
 			</body>
 		</html>
 	)
