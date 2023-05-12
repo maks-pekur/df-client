@@ -1,23 +1,40 @@
 'use client'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { fetchMenu } from '@/store/features/menuSlice'
-import { useEffect } from 'react'
+import {
+	useFetchAllCategoriesQuery,
+	useFetchAllMenuItemsQuery,
+} from '@/store/services/MenuService'
 import { MenuItem } from './MenuItem'
+import { Heading } from './ui/Heading'
 
 export const MenuList = () => {
-	const dispatch = useAppDispatch()
-	const { data, status, error } = useAppSelector(state => state.menu)
-
-	useEffect(() => {
-		dispatch(fetchMenu())
-	}, [])
+	const {
+		data: menu,
+		error: errorMenu,
+		isLoading: isLoadingMenu,
+	} = useFetchAllMenuItemsQuery('')
+	const {
+		data: categories,
+		error: errorCategories,
+		isLoading: isLoadingCategories,
+	} = useFetchAllCategoriesQuery('')
 
 	return (
 		<div className="py-10">
-			{status === 'idle' && 'pending' && <div>Loading...</div>}
-			{status === 'failed' && <div>{error}</div>}
-			<div className="grid grid-cols-4 gap-10">
-				{data && data.map(item => <MenuItem key={item._id} item={item} />)}
+			{(isLoadingMenu || isLoadingCategories) && <div>Loading...</div>}
+			{(errorMenu || errorCategories) && <div>Oops! Data not found</div>}
+			<div>
+				{categories &&
+					categories.map(category => (
+						<div id={category.slug} key={category._id} className="py-10">
+							<Heading tag={'h2'}>{category.name}</Heading>
+							<div className="grid grid-cols-4 gap-10">
+								{menu &&
+									menu
+										.filter(item => item.productCategoryId === category._id)
+										.map(item => <MenuItem key={item._id} item={item} />)}
+							</div>
+						</div>
+					))}
 			</div>
 		</div>
 	)

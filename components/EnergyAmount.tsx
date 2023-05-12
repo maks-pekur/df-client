@@ -8,15 +8,14 @@ interface EnergyProps {
 	carbohydratesAmount: number
 	energyAmount: number
 }
-export const EnergyAmount = ({ content }: EnergyProps) => {
+
+export const EnergyAmount = ({
+	fatAmount,
+	proteinsAmount,
+	carbohydratesAmount,
+	energyAmount,
+}: EnergyProps) => {
 	const [open, setOpen] = useState(false)
-
-	const { fatAmount, proteinsAmount, carbohydratesAmount, energyAmount } =
-		content
-
-	if (!energyAmount || !fatAmount || !proteinsAmount || !carbohydratesAmount) {
-		return
-	}
 
 	return (
 		<div className="relative h-full w-full">

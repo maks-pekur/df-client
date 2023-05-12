@@ -1,28 +1,26 @@
-import { addItemToCart, removeItemFromCart } from '@/store/features/cartSlice'
+import { IMenuItem } from '@/types'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useDispatch } from 'react-redux'
 
-export const CartItem = ({ product }) => {
-	const { id, name, imageLinks, description, sizePrices, quantity } = product
+interface CartItemProps {
+	product: IMenuItem
+}
 
+export const CartItem = ({ product }: CartItemProps) => {
 	const dispatch = useDispatch()
 
-	const removeItem = () => dispatch(removeItemFromCart(id))
-
-	const changeQty = (item, quantity) => {
-		dispatch(addItemToCart({ ...item, quantity }))
-	}
+	const { name, imageLink, description, quantity } = product
 
 	return (
 		<li className="flex py-3 px-4 rounded-2xl relative border-[1px]">
 			<TrashIcon
 				className="w-4 h-4 absolute right-2 top-2 hover:text-yellow-300 cursor-pointer"
-				onClick={removeItem}
+				onClick={() => {}}
 			/>
 			<div className="h-24 w-24 flex-shrink-0 overflow-hidden">
 				<Image
-					src={imageLinks[0]}
+					src={imageLink}
 					alt={name}
 					width={50}
 					height={50}
@@ -38,7 +36,7 @@ export const CartItem = ({ product }) => {
 					<div className="flex items-center space-x-1 bg-yellow-200 rounded-full">
 						<div
 							className="px-3 rounded-l-full cursor-pointer"
-							onClick={() => changeQty(product, Math.max(1, quantity - 1))}
+							onClick={() => {}}
 						>
 							-
 						</div>
@@ -47,12 +45,12 @@ export const CartItem = ({ product }) => {
 						</span>
 						<div
 							className="px-3 rounded-r-full cursor-pointer"
-							onClick={() => changeQty(product, Math.max(1, quantity + 1))}
+							onClick={() => {}}
 						>
 							+
 						</div>
 					</div>
-					<div className="ml-4">{sizePrices[0].price * quantity}</div>
+					<div className="ml-4">0</div>
 				</div>
 			</div>
 		</li>

@@ -1,14 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit'
-import CartReducer from './features/cartSlice'
-import menuReducer from './features/menuSlice'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import cartReducer from './features/cartSlice'
 import modalReducer from './features/modalSlice'
+import { cartApi } from './services/CartService'
+import { menuApi } from './services/MenuService'
+import { storiesApi } from './services/StoriesService'
+
+const rootReducer = combineReducers({
+	modal: modalReducer,
+	cart: cartReducer,
+	[cartApi.reducerPath]: cartApi.reducer,
+	[menuApi.reducerPath]: menuApi.reducer,
+	[storiesApi.reducerPath]: storiesApi.reducer,
+})
 
 export const store = configureStore({
-	reducer: {
-		cart: CartReducer,
-		menu: menuReducer,
-		modal: modalReducer,
-	},
+	reducer: rootReducer,
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat(
+			cartApi.middleware,
+			menuApi.middleware,
+			storiesApi.middleware
+		),
 })
 
 export type RootState = ReturnType<typeof store.getState>

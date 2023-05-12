@@ -1,6 +1,7 @@
 'use client'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { closeCart } from '@/store/features/cartSlice'
+import { useFetchAllCartItemsQuery } from '@/store/services/CartService'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
@@ -9,9 +10,9 @@ import { CartItem } from './CartItem'
 import { MainButton } from './ui/MainBtn'
 
 export const Cart = () => {
+	const { data, error, isLoading } = useFetchAllCartItemsQuery(' ')
+	const { isOpen } = useAppSelector(state => state.cart)
 	const dispatch = useAppDispatch()
-	const cartItems = useAppSelector(state => state.cart.data)
-	const { isOpen } = useAppSelector(store => store.cart)
 
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
@@ -56,7 +57,7 @@ export const Cart = () => {
 												<XMarkIcon className="h-8 w-8" aria-hidden="true" />
 											</button>
 										</div>
-										{!cartItems.length ? (
+										{!data ? (
 											<div className="w-full h-full flex flex-col items-center justify-center space-y-2">
 												<h3 className="font-bold text-xl">Ой! Пусто!</h3>
 												<p>Добавьте что-нибудь в корзину</p>
@@ -68,9 +69,9 @@ export const Cart = () => {
 													<div className="mt-16">
 														<div className="flow-root">
 															<ul role="list" className="space-y-2">
-																{cartItems.map(product => (
+																{data?.map(product => (
 																	<CartItem
-																		key={product.id}
+																		key={product._id}
 																		product={product}
 																	/>
 																))}

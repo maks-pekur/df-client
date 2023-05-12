@@ -4,6 +4,7 @@ import { closeModal } from '@/store/features/modalSlice'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import { Fragment } from 'react'
+import { EnergyAmount } from './EnergyAmount'
 import { MainButton } from './ui/MainBtn'
 
 export const Modal = () => {
@@ -57,7 +58,12 @@ export const Modal = () => {
 												<div className="flex justify-between items-center">
 													<div className="pt-8 text-2xl">{data.name}</div>
 													<div className="pt-8">
-														{/* <EnergyAmount content={data} /> */}
+														<EnergyAmount
+															fatAmount={data.energyAmount}
+															proteinsAmount={data.proteinsAmount}
+															carbohydratesAmount={data.carbohydratesAmount}
+															energyAmount={data.energyAmount}
+														/>
 													</div>
 												</div>
 												<div className="text-gray-500 text-sm">

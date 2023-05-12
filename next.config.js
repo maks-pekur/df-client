@@ -6,6 +6,10 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'dodopizza-a.akamaihd.net',
 			},
+			{
+				protocol: 'https',
+				hostname: 'cdn.inappstory.com',
+			},
 		],
 	},
 }

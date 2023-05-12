@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/hooks/redux'
 import { openModal } from '@/store/features/modalSlice'
+import { useAddToCartMutation } from '@/store/services/CartService'
 import { IMenuItem } from '@/types'
 import Image from 'next/image'
 import { MainButton } from './ui/MainBtn'
@@ -10,6 +11,8 @@ interface ItemProps {
 
 export const MenuItem = ({ item }: ItemProps) => {
 	const dispatch = useAppDispatch()
+	const [addToCart, { isLoading }] = useAddToCartMutation()
+
 	return (
 		<article
 			onClick={() => dispatch(openModal(item))}
@@ -33,9 +36,22 @@ export const MenuItem = ({ item }: ItemProps) => {
 				<div className="flex items-center justify-between">
 					<div>Price</div>
 					<div>
-						<MainButton>
-							{item.sizes.length > 1 ? 'Выбрать' : 'В корзину'}
-						</MainButton>
+						{item.sizes.length > 1 ? (
+							<MainButton onClick={() => dispatch(openModal(item))}>
+								Выбрать
+							</MainButton>
+						) : (
+							<MainButton
+								onClick={() =>
+									addToCart({
+										productId: item._id,
+										userId: '6458f0cfb2748e9a47cb72ae',
+									})
+								}
+							>
+								В корзину
+							</MainButton>
+						)}
 					</div>
 				</div>
 			</div>
