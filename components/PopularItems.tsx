@@ -1,28 +1,28 @@
 'use client'
 import { useFetchPopularQuery } from '@/store/services/MenuService'
-import Image from 'next/image'
 import { Heading } from './ui/Heading'
 
 export const PopularItems = () => {
-	const { data, error, isLoading } = useFetchPopularQuery('')
+	const { data: populars, error, isLoading } = useFetchPopularQuery('')
 
 	return (
 		<section className="py-6">
 			<div className="overflow-hidden">
 				{isLoading && <div>Loading...</div>}
 				{error && <div>Popular not found</div>}
-				{data && (
+				{populars && (
 					<>
 						<Heading tag={'h3'}>Часто заказывают</Heading>
 						<div className="flex gap-6 overflow-x-scroll py-2 scrollbar-hide">
-							{data &&
-								data.map(product => (
+							{populars &&
+								populars.map(item => (
 									<div
 										onClick={() => {}}
-										key={product.id}
+										key={item._id}
 										className="shadow-md p-6 flex items-center min-w-[300px] rounded-2xl cursor-pointer"
 									>
-										<div className="flex items-center justify-center">
+										<div>{item.productId}</div>
+										{/* <div className="flex items-center justify-center">
 											<Image
 												src={product.imageLinks[0]}
 												alt={product.name}
@@ -38,7 +38,7 @@ export const PopularItems = () => {
 													<span>грн</span>
 												</div>
 											</div>
-										</div>
+										</div> */}
 									</div>
 								))}
 						</div>

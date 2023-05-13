@@ -1,22 +1,42 @@
+import {
+	useRemoveAllMutation,
+	useRemoveOneMutation,
+	useUpdateCountMutation,
+} from '@/store/services/CartService'
 import { IMenuItem } from '@/types'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
-import { useDispatch } from 'react-redux'
 
 interface CartItemProps {
 	product: IMenuItem
 }
 
 export const CartItem = ({ product }: CartItemProps) => {
-	const dispatch = useDispatch()
+	const [removeOne, {}] = useRemoveOneMutation()
+	const [removeAll, {}] = useRemoveAllMutation()
+	const [updateCount, {}] = useUpdateCountMutation()
 
-	const { name, imageLink, description, quantity } = product
+	const { _id, name, imageLink, description, quantity } = product
+
+	const handleRemoveOne = async productId => {
+		await removeOne(productId)
+	}
+
+	const increment = async () => {
+		const count = quantity + 1
+		await updateCount(_id, count)
+	}
+
+	const decrement = async () => {
+		const count = quantity - 1
+		await updateCount(_id, count)
+	}
 
 	return (
 		<li className="flex py-3 px-4 rounded-2xl relative border-[1px]">
 			<TrashIcon
 				className="w-4 h-4 absolute right-2 top-2 hover:text-yellow-300 cursor-pointer"
-				onClick={() => {}}
+				onClick={() => handleRemoveOne(_id)}
 			/>
 			<div className="h-24 w-24 flex-shrink-0 overflow-hidden">
 				<Image
@@ -36,7 +56,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 					<div className="flex items-center space-x-1 bg-yellow-200 rounded-full">
 						<div
 							className="px-3 rounded-l-full cursor-pointer"
-							onClick={() => {}}
+							onClick={increment}
 						>
 							-
 						</div>
@@ -45,7 +65,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 						</span>
 						<div
 							className="px-3 rounded-r-full cursor-pointer"
-							onClick={() => {}}
+							onClick={decrement}
 						>
 							+
 						</div>

@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { MainButton } from './ui/MainBtn'
 
 export const Header = () => {
 	return (
@@ -20,7 +19,7 @@ export const Header = () => {
 					<span className="text-gray-500 ">Звонок БЕСПЛАТНЫЙ</span>
 				</div>
 				<div>
-					<MainButton>Login</MainButton>
+					<Link href="/login">Login</Link>
 				</div>
 			</div>
 		</header>

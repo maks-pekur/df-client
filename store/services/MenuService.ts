@@ -10,6 +10,11 @@ export const menuApi = createApi({
 				url: `/menu`,
 			}),
 		}),
+		fetchOneMenuItems: builder.query<IMenuItem, any>({
+			query: id => ({
+				url: `/menu/${id}`,
+			}),
+		}),
 		fetchAllCategories: builder.query<ICategory[], any>({
 			query: () => ({
 				url: `/categories`,
@@ -17,10 +22,15 @@ export const menuApi = createApi({
 		}),
 		fetchPopular: builder.query({
 			query: () => ({
-				url: `/popular`,
+				url: `/populars`,
 			}),
 		}),
 	}),
 })
 
-export const { useFetchAllMenuItemsQuery, useFetchAllCategoriesQuery, useFetchPopularQuery } = menuApi
+export const {
+	useFetchAllMenuItemsQuery,
+	useFetchAllCategoriesQuery,
+	useFetchPopularQuery,
+	useFetchOneMenuItemsQuery
+} = menuApi

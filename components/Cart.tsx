@@ -57,11 +57,13 @@ export const Cart = () => {
 												<XMarkIcon className="h-8 w-8" aria-hidden="true" />
 											</button>
 										</div>
-										{!data ? (
+										{data && data.length <= 0 ? (
 											<div className="w-full h-full flex flex-col items-center justify-center space-y-2">
 												<h3 className="font-bold text-xl">Ой! Пусто!</h3>
 												<p>Добавьте что-нибудь в корзину</p>
-												<MainButton onClick={() => {}}>В меню</MainButton>
+												<MainButton onClick={() => dispatch(closeCart())}>
+													В меню
+												</MainButton>
 											</div>
 										) : (
 											<>
@@ -69,12 +71,13 @@ export const Cart = () => {
 													<div className="mt-16">
 														<div className="flow-root">
 															<ul role="list" className="space-y-2">
-																{data?.map(product => (
-																	<CartItem
-																		key={product._id}
-																		product={product}
-																	/>
-																))}
+																{data &&
+																	data.map(product => (
+																		<CartItem
+																			key={product._id}
+																			product={product}
+																		/>
+																	))}
 															</ul>
 														</div>
 													</div>

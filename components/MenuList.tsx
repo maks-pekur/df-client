@@ -31,7 +31,13 @@ export const MenuList = () => {
 								{menu &&
 									menu
 										.filter(item => item.productCategoryId === category._id)
-										.map(item => <MenuItem key={item._id} item={item} />)}
+										.map(item => (
+											<MenuItem
+												key={item._id}
+												item={item}
+												slug={category.slug}
+											/>
+										))}
 							</div>
 						</div>
 					))}

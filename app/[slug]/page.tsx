@@ -1,23 +1,27 @@
 'use client'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { closeModal } from '@/store/features/modalSlice'
+import { EnergyAmount } from '@/components/EnergyAmount'
+import { MainButton } from '@/components/ui/MainBtn'
+import { useFetchOneMenuItemsQuery } from '@/store/services/MenuService'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Fragment } from 'react'
-import { EnergyAmount } from './EnergyAmount'
-import { MainButton } from './ui/MainBtn'
 
-export const Modal = () => {
-	const dispatch = useAppDispatch()
-	const { isOpen, data } = useAppSelector(state => state.modal)
+interface IModalParams {
+	params: {
+		slug: string | number
+	}
+}
+
+export default function Modal({ params }: IModalParams) {
+	const { data, error, isLoading } = useFetchOneMenuItemsQuery(params.slug)
+
+	if (isLoading) return <div>Loading...</div>
+	if (error) return <div>Error</div>
 
 	return (
-		<Transition.Root show={isOpen} as={Fragment}>
-			<Dialog
-				as="div"
-				className="relative z-20"
-				onClose={() => dispatch(closeModal())}
-			>
+		<Transition.Root show={true} as={Fragment}>
+			<Dialog as="div" className="relative z-20" onClose={() => {}}>
 				<Transition.Child
 					as={Fragment}
 					enter="ease-out duration-300"
@@ -30,7 +34,7 @@ export const Modal = () => {
 					<div className="fixed inset-0 bg-black bg-opacity-70 transition-opacity" />
 				</Transition.Child>
 
-				<div className="fixed inset-0 z-20 overflow-y-auto">
+				<div className="fixed inset-0 overflow-y-auto">
 					<div className="flex min-h-full justify-center p-4 text-center sm:items-center">
 						<Transition.Child
 							as={Fragment}
@@ -41,9 +45,15 @@ export const Modal = () => {
 							leaveFrom="opacity-100 translate-y-0 sm:scale-100"
 							leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 						>
-							<Dialog.Panel className="relative transform overflow-hidden rounded-3xl bg-white shadow-xl transition-all max-w-4xl">
-								{data ? (
-									<div className="flex h-[600px]">
+							<Dialog.Panel className="relative transform rounded-3xl bg-white shadow-xl transition-all max-w-4xl">
+								<Link
+									href="/"
+									className="text-white text-xl ml-6 absolute top-0 -right-8"
+								>
+									X
+								</Link>
+								{data && (
+									<div className="flex h-[600px] overflow-hidden rounded-3xl">
 										<div className="flex items-center justify-center p-12 w-[60%]">
 											<Image
 												src={data.imageLinks[0]}
@@ -83,8 +93,6 @@ export const Modal = () => {
 											</div>
 										</div>
 									</div>
-								) : (
-									<div>Error</div>
 								)}
 							</Dialog.Panel>
 						</Transition.Child>

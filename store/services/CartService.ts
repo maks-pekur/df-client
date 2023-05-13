@@ -12,23 +12,43 @@ export const cartApi = createApi({
 			}),
 			providesTags: result => ['Cart'],
 		}),
-		addToCart: builder.mutation<any, any>({
-			query: ({ productId, userId }) => ({
+		addToCart: builder.mutation({
+			query: good => ({
 				url: `/cart/add/`,
 				method: 'POST',
-				body: JSON.stringify({ productId, userId }),
+				body: good,
 			}),
 			invalidatesTags: ['Cart'],
 		}),
-		removeAll: builder.mutation<any, any>({
-			query: ({ userId }) => ({
-				url: `/cart/all/`,
+		updateCount: builder.mutation({
+			query: (id, count) => ({
+				url: `/cart/qty/${id}`,
+				method: 'PATCH',
+				body: count,
+			}),
+			invalidatesTags: ['Cart'],
+		}),
+		removeOne: builder.mutation({
+			query: id => ({
+				url: `/cart/one/${id}`,
 				method: 'DELETE',
-				body: userId,
+			}),
+			invalidatesTags: ['Cart'],
+		}),
+		removeAll: builder.mutation({
+			query: id => ({
+				url: `/cart/all/${id}`,
+				method: 'DELETE',
 			}),
 			invalidatesTags: ['Cart'],
 		}),
 	}),
 })
 
-export const { useFetchAllCartItemsQuery, useAddToCartMutation } = cartApi
+export const {
+	useFetchAllCartItemsQuery,
+	useAddToCartMutation,
+	useRemoveOneMutation,
+	useRemoveAllMutation,
+	useUpdateCountMutation,
+} = cartApi

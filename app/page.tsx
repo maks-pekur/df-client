@@ -9,17 +9,6 @@ import { Stories } from '@/components/Stories'
 
 export default function Home() {
 	return (
-		<div className="flex flex-col min-h-screen">
-			<Header />
-			<Navbar />
-			<main className="flex-1 max-w-7xl mx-auto">
-				<Stories />
-				<PopularItems />
-				<MenuList />
-			</main>
-			<Cart />
-			<Modal />
-			<Footer />
-		</div>
+		<div></div>
 	)
 }

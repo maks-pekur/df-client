@@ -1,12 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import cartReducer from './features/cartSlice'
-import modalReducer from './features/modalSlice'
 import { cartApi } from './services/CartService'
 import { menuApi } from './services/MenuService'
 import { storiesApi } from './services/StoriesService'
 
 const rootReducer = combineReducers({
-	modal: modalReducer,
 	cart: cartReducer,
 	[cartApi.reducerPath]: cartApi.reducer,
 	[menuApi.reducerPath]: menuApi.reducer,
