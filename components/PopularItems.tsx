@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Heading } from './ui/Heading'
 
 export const PopularItems = () => {
-	const { data: populars, error, isLoading } = useFetchPopularQuery('')
+	const { data, error, isLoading } = useFetchPopularQuery('')
 
 	if (isLoading) return <div>Loading</div>
 
@@ -13,13 +13,13 @@ export const PopularItems = () => {
 			<div className="overflow-hidden">
 				<Heading tag={'h3'}>Часто заказывают</Heading>
 				<div className="flex gap-6 overflow-x-scroll py-2 scrollbar-hide">
-					{populars.map(({ productId }) => (
+					{data.map((item: { productId: string }) => (
 						<Link
-							href={{ pathname: '/', query: { _id: productId } }}
-							key={productId}
+							href={{ pathname: '/', query: { _id: item.productId } }}
+							key={item.productId}
 							className="shadow-md p-6 flex items-center min-w-[300px] rounded-2xl cursor-pointer"
 						>
-							<div>{productId}</div>
+							<div>{item.productId}</div>
 							{/* <div className="flex items-center justify-center">
 											<Image
 												src={product.imageLinks[0]}
