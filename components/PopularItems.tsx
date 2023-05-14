@@ -1,28 +1,26 @@
 'use client'
 import { useFetchPopularQuery } from '@/store/services/MenuService'
+import Link from 'next/link'
 import { Heading } from './ui/Heading'
 
 export const PopularItems = () => {
 	const { data: populars, error, isLoading } = useFetchPopularQuery('')
 
+	if (isLoading) return <div>Loading</div>
+
 	return (
 		<section className="py-6">
 			<div className="overflow-hidden">
-				{isLoading && <div>Loading...</div>}
-				{error && <div>Popular not found</div>}
-				{populars && (
-					<>
-						<Heading tag={'h3'}>Часто заказывают</Heading>
-						<div className="flex gap-6 overflow-x-scroll py-2 scrollbar-hide">
-							{populars &&
-								populars.map(item => (
-									<div
-										onClick={() => {}}
-										key={item._id}
-										className="shadow-md p-6 flex items-center min-w-[300px] rounded-2xl cursor-pointer"
-									>
-										<div>{item.productId}</div>
-										{/* <div className="flex items-center justify-center">
+				<Heading tag={'h3'}>Часто заказывают</Heading>
+				<div className="flex gap-6 overflow-x-scroll py-2 scrollbar-hide">
+					{populars.map(({ productId }) => (
+						<Link
+							href={{ pathname: '/', query: { _id: productId } }}
+							key={productId}
+							className="shadow-md p-6 flex items-center min-w-[300px] rounded-2xl cursor-pointer"
+						>
+							<div>{productId}</div>
+							{/* <div className="flex items-center justify-center">
 											<Image
 												src={product.imageLinks[0]}
 												alt={product.name}
@@ -39,11 +37,9 @@ export const PopularItems = () => {
 												</div>
 											</div>
 										</div> */}
-									</div>
-								))}
-						</div>
-					</>
-				)}
+						</Link>
+					))}
+				</div>
 			</div>
 		</section>
 	)
