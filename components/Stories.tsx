@@ -12,7 +12,7 @@ export const Stories = () => {
 				{data &&
 					data.map(story => (
 						<div
-							key={story.id}
+							key={story._id}
 							className="w-[210px] h-full rounded-3xl border-[3px] border-red-500 p-1 cursor-pointer"
 						>
 							<div className="w-full h-full rounded-2xl overflow-hidden">
