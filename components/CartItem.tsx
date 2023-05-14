@@ -18,18 +18,8 @@ export const CartItem = ({ product }: CartItemProps) => {
 
 	const { _id, name, imageLink, description, quantity } = product
 
-	const handleRemoveOne = async productId => {
-		await removeOne(productId)
-	}
-
-	const increment = async () => {
-		const count = quantity + 1
-		await updateCount(_id, count)
-	}
-
-	const decrement = async () => {
-		const count = quantity - 1
-		await updateCount(_id, count)
+	const handleRemoveOne = async (id: string) => {
+		await removeOne(id)
 	}
 
 	return (
@@ -56,7 +46,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 					<div className="flex items-center space-x-1 bg-yellow-200 rounded-full">
 						<div
 							className="px-3 rounded-l-full cursor-pointer"
-							onClick={increment}
+							onClick={() => {}}
 						>
 							-
 						</div>
@@ -65,7 +55,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 						</span>
 						<div
 							className="px-3 rounded-r-full cursor-pointer"
-							onClick={decrement}
+							onClick={() => {}}
 						>
 							+
 						</div>
