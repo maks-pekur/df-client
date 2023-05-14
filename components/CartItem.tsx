@@ -3,15 +3,11 @@ import {
 	useRemoveOneMutation,
 	useUpdateCountMutation,
 } from '@/store/services/CartService'
-import { IMenuItem } from '@/types'
+import { ICartItem } from '@/types'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 
-interface CartItemProps {
-	product: IMenuItem
-}
-
-export const CartItem = ({ product }: CartItemProps) => {
+export const CartItem = ({ product }: ICartItem) => {
 	const [removeOne, {}] = useRemoveOneMutation()
 	const [removeAll, {}] = useRemoveAllMutation()
 	const [updateCount, {}] = useUpdateCountMutation()

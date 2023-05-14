@@ -28,10 +28,12 @@ export interface ICategory {
 	slug: string
 }
 
-export interface ICartItems {
+export interface ICartItem {
 	_id: string
 	name: string
 	description: string
 	productId: string
 	userId: string
+	imageLink: string
+	quantity: number
 }
