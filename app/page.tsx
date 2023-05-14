@@ -34,7 +34,7 @@ export default function Home({ searchParams }: SearchParams) {
 			{!!Object.keys(searchParams).length && (
 				<Modal onClose={() => router.push('/')}>
 					{searchParams?.slug === 'combos' ? (
-						<ComboDetail comboId={searchParams._id} />
+						<ComboDetail comboId={searchParams?._id} />
 					) : (
 						<ProductDetail productId={searchParams?._id} />
 					)}
