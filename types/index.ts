@@ -29,7 +29,7 @@ export interface ICategory {
 }
 
 export interface ICartItems {
-	id: string
+	_id: string
 	name: string
 	description: string
 	productId: string
