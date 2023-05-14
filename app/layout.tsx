@@ -1,12 +1,5 @@
 import Providers from '@/store/Providers'
 
-import { Cart } from '@/components/Cart'
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
-import { MenuList } from '@/components/MenuList'
-import { Navbar } from '@/components/Navbar'
-import { PopularItems } from '@/components/PopularItems'
-import { Stories } from '@/components/Stories'
 import './globals.css'
 
 export const metadata = {
@@ -22,18 +15,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className="min-h-screen flex flex-col">
-				<Providers>
-					<Header />
-					<Navbar />
-					<div className="max-w-7xl mx-auto">
-						<Stories />
-						<PopularItems />
-						<MenuList />
-					</div>
-					<Cart />
-					{children}
-					<Footer />
-				</Providers>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	)

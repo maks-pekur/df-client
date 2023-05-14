@@ -10,7 +10,7 @@ export const menuApi = createApi({
 				url: `/menu`,
 			}),
 		}),
-		fetchOneMenuItems: builder.query<IMenuItem, any>({
+		fetchOneMenuItems: builder.query<IMenuItem, string>({
 			query: id => ({
 				url: `/menu/${id}`,
 			}),

@@ -6,6 +6,7 @@ import { useFetchAllCategoriesQuery } from '@/store/services/MenuService'
 import { ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { useMotionValueEvent, useScroll } from 'framer-motion'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Link as LinkScroll } from 'react-scroll'
 
@@ -13,6 +14,7 @@ export const Navbar = () => {
 	const [scroll, setScroll] = useState(false)
 	const { scrollY } = useScroll()
 	const dispatch = useAppDispatch()
+	const pathname = usePathname()
 
 	const { data: cartItems } = useFetchAllCartItemsQuery('')
 	const { data: categories } = useFetchAllCategoriesQuery('')
@@ -45,21 +47,24 @@ export const Navbar = () => {
 						</div>
 						<ul className="flex items-center space-x-6">
 							{categories &&
-								categories.map(category => (
-									<li
-										key={category._id}
-										className="cursor-pointer hover:text-orange-500"
-									>
-										<LinkScroll
-											to={`${category.slug}`}
-											offset={-50}
-											spy={true}
-											smooth={true}
+								categories.map(link => {
+									return (
+										<li
+											key={link._id}
+											className="cursor-pointer hover:text-orange-500"
 										>
-											{category.name}
-										</LinkScroll>
-									</li>
-								))}
+											<LinkScroll
+												to={`${link.slug}`}
+												offset={-50}
+												spy={true}
+												smooth={true}
+												activeClass="text-orange-500"
+											>
+												{link.name}
+											</LinkScroll>
+										</li>
+									)
+								})}
 						</ul>
 					</div>
 
