@@ -1,16 +1,22 @@
 'use client'
 import { Dialog, Transition } from '@headlessui/react'
+import { useRouter } from 'next/navigation'
 import { Fragment } from 'react'
 
 interface ModalProps {
 	children: React.ReactNode
-	onClose: () => void
 }
 
-export const Modal = ({ children, onClose }: ModalProps) => {
+export const Modal = ({ children }: ModalProps) => {
+	const router = useRouter()
+
 	return (
 		<Transition.Root show={true} as={Fragment}>
-			<Dialog as="div" className="relative z-20" onClose={onClose}>
+			<Dialog
+				as="div"
+				className="relative z-20"
+				onClose={() => router.push('/')}
+			>
 				<Transition.Child
 					as={Fragment}
 					enter="ease-out duration-300"

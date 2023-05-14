@@ -1,9 +1,13 @@
 'use client'
 
-export const ComboDetail = ({ comboId }) => {
+import { useSearchParams } from 'next/navigation'
+
+export const ComboDetail = () => {
+	const searchParams = useSearchParams()
+	const id = searchParams.get('_id') || ''
 	return (
 		<div className="flex h-[600px] overflow-hidden rounded-3xl">
-			<div>{JSON.stringify(comboId)}</div>
+			<div>{id}</div>
 			{/* <div className="flex items-center justify-center p-12 w-[60%]">
 				<Image
 					src={data.imageLinks[0]}

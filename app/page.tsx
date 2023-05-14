@@ -9,17 +9,11 @@ import { Navbar } from '@/components/Navbar'
 import { PopularItems } from '@/components/PopularItems'
 import { ProductDetail } from '@/components/ProductDetail'
 import { Stories } from '@/components/Stories'
-import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
-interface SearchParams {
-	searchParams?: {
-		slug?: string
-		_id?: string
-	}
-}
-
-export default function Home({ searchParams }: SearchParams) {
-	const router = useRouter()
+export default function Home() {
+	const searchParams = useSearchParams()
+	const slug = searchParams.get('slug')
 
 	return (
 		<>
@@ -31,15 +25,10 @@ export default function Home({ searchParams }: SearchParams) {
 				<MenuList />
 			</div>
 			<Cart />
-			{!!Object.keys(searchParams).length && (
-				<Modal onClose={() => router.push('/')}>
-					{searchParams?.slug === 'combos' ? (
-						<ComboDetail comboId={searchParams?._id} />
-					) : (
-						<ProductDetail productId={searchParams?._id} />
-					)}
-				</Modal>
+			{slug && (
+				<Modal>{slug === 'combos' ? <ComboDetail /> : <ProductDetail />}</Modal>
 			)}
+
 			<Footer />
 		</>
 	)
