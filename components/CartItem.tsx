@@ -7,7 +7,11 @@ import { ICartItem } from '@/types'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 
-export const CartItem = ({ product }: ICartItem) => {
+interface CartItemProps {
+	product: ICartItem
+}
+
+export const CartItem = ({ product }: CartItemProps) => {
 	const [removeOne, {}] = useRemoveOneMutation()
 	const [removeAll, {}] = useRemoveAllMutation()
 	const [updateCount, {}] = useUpdateCountMutation()
