@@ -15,7 +15,10 @@ export const MenuItem = ({ item, slug }: ItemProps) => {
 
 	const { _id, name, description, imageLinks, sizes } = item
 
-	const handleAddToCart = async data => {
+	const handleAddToCart = async (data: {
+		productId: string
+		userId: string
+	}) => {
 		await addToCart(data)
 	}
 
