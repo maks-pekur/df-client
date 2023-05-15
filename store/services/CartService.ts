@@ -1,4 +1,4 @@
-import { ICartItems } from '@/types'
+import { ICartItems } from '@/types/category.interface'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const cartApi = createApi({

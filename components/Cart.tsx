@@ -5,11 +5,11 @@ import { useFetchAllCartItemsQuery } from '@/store/services/CartService'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { FC, Fragment } from 'react'
 import { CartItem } from './CartItem'
 import { MainButton } from './ui/MainBtn'
 
-export const Cart = () => {
+export const Cart: FC = () => {
 	const { data, error, isLoading } = useFetchAllCartItemsQuery(' ')
 	const { isOpen } = useAppSelector(state => state.cart)
 	const dispatch = useAppDispatch()

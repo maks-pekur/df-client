@@ -1,21 +1,22 @@
-import { ICategory, IMenuItem } from '@/types'
+import { CategoryDocument } from '@/types/category.interface'
+import { ProductDocument } from '@/types/product.interface'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const menuApi = createApi({
 	reducerPath: 'menuApi',
 	baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}` }),
 	endpoints: builder => ({
-		fetchAllMenuItems: builder.query<IMenuItem[], any>({
+		fetchProducts: builder.query<ProductDocument[], any>({
 			query: () => ({
 				url: `/menu`,
 			}),
 		}),
-		fetchOneMenuItems: builder.query<IMenuItem, string>({
+		fetchOneProduct: builder.query<ProductDocument, string>({
 			query: id => ({
 				url: `/menu/${id}`,
 			}),
 		}),
-		fetchAllCategories: builder.query<ICategory[], any>({
+		fetchAllCategories: builder.query<CategoryDocument[], any>({
 			query: () => ({
 				url: `/categories`,
 			}),
@@ -29,8 +30,8 @@ export const menuApi = createApi({
 })
 
 export const {
-	useFetchAllMenuItemsQuery,
+	useFetchProductsQuery,
+	useFetchOneProductQuery,
 	useFetchAllCategoriesQuery,
 	useFetchPopularQuery,
-	useFetchOneMenuItemsQuery
 } = menuApi

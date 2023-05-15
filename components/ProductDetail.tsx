@@ -1,5 +1,5 @@
 'use client'
-import { useFetchOneMenuItemsQuery } from '@/store/services/MenuService'
+import { useFetchOneProductQuery } from '@/store/services/MenuService'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { EnergyAmount } from './EnergyAmount'
@@ -9,7 +9,7 @@ export const ProductDetail = () => {
 	const searchParams = useSearchParams()
 	const id = searchParams.get('_id') || ''
 
-	const { data, error, isLoading } = useFetchOneMenuItemsQuery(id)
+	const { data, error, isLoading } = useFetchOneProductQuery(id)
 
 	if (isLoading) return <div>Loading...</div>
 	if (error) return <div>Error</div>

@@ -1,9 +1,9 @@
 'use client'
 import {
 	useFetchAllCategoriesQuery,
-	useFetchAllMenuItemsQuery,
+	useFetchProductsQuery,
 } from '@/store/services/MenuService'
-import { MenuItem } from './MenuItem'
+import { Product } from './Product'
 import { Heading } from './ui/Heading'
 
 export const MenuList = () => {
@@ -11,7 +11,7 @@ export const MenuList = () => {
 		data: menu,
 		error: errorMenu,
 		isLoading: isLoadingMenu,
-	} = useFetchAllMenuItemsQuery('')
+	} = useFetchProductsQuery('')
 	const {
 		data: categories,
 		error: errorCategories,
@@ -30,11 +30,13 @@ export const MenuList = () => {
 							<div className="grid grid-cols-4 gap-10">
 								{menu &&
 									menu
-										.filter(item => item.productCategoryId === category._id)
-										.map(item => (
-											<MenuItem
-												key={item._id}
-												item={item}
+										.filter(
+											product => product.productCategoryId === category._id
+										)
+										.map(product => (
+											<Product
+												key={product._id}
+												product={product}
 												slug={category.slug}
 											/>
 										))}

@@ -1,19 +1,20 @@
 'use client'
 import { useAddToCartMutation } from '@/store/services/CartService'
-import { IMenuItem } from '@/types'
+import { ProductDocument } from '@/types/product.interface'
 import Image from 'next/image'
 import Link from 'next/link'
+import { FC } from 'react'
 import { MainButton } from './ui/MainBtn'
 
-interface ItemProps {
-	item: IMenuItem
+interface ProductComponentProps {
+	product: ProductDocument
 	slug: string
 }
 
-export const MenuItem = ({ item, slug }: ItemProps) => {
+export const Product: FC<ProductComponentProps> = ({ product, slug }) => {
 	const [addToCart, {}] = useAddToCartMutation()
 
-	const { _id, name, description, imageLinks, sizes } = item
+	const { _id, name, description, imageLinks, sizes } = product
 
 	const handleAddToCart = async (data: {
 		productId: string
@@ -31,12 +32,7 @@ export const MenuItem = ({ item, slug }: ItemProps) => {
 					className="space-y-2"
 				>
 					<div className="flex items-center justify-center">
-						<Image
-							src={imageLinks[0]}
-							alt={item.name}
-							width={220}
-							height={220}
-						/>
+						<Image src={imageLinks[0]} alt={name} width={220} height={220} />
 					</div>
 					<div className="flex flex-col space-y-2">
 						<div className="text-lg">{name}</div>

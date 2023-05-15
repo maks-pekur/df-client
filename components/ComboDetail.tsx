@@ -1,8 +1,8 @@
 'use client'
-
 import { useSearchParams } from 'next/navigation'
+import { FC } from 'react'
 
-export const ComboDetail = () => {
+export const ComboDetail: FC = () => {
 	const searchParams = useSearchParams()
 	const id = searchParams.get('_id') || ''
 	return (

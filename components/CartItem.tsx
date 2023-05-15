@@ -3,7 +3,7 @@ import {
 	useRemoveOneMutation,
 	useUpdateCountMutation,
 } from '@/store/services/CartService'
-import { ICartItem } from '@/types'
+import { ICartItem } from '@/types/cart.interface'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 
@@ -16,7 +16,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 	const [removeAll, {}] = useRemoveAllMutation()
 	const [updateCount, {}] = useUpdateCountMutation()
 
-	const { _id, name, imageLink, description, quantity } = product
+	const { _id, name, imageLinks, description, quantity } = product
 
 	const handleRemoveOne = async (id: string) => {
 		await removeOne(id)
@@ -30,7 +30,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 			/>
 			<div className="h-24 w-24 flex-shrink-0 overflow-hidden">
 				<Image
-					src={imageLink}
+					src={imageLinks[0]}
 					alt={name}
 					width={50}
 					height={50}
